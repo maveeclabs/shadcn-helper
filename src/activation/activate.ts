@@ -10,9 +10,9 @@ import { getWorkspaceRoot } from '../utils/workspace';
 const logger = Logger.getInstance();
 
 export function activate(context: vscode.ExtensionContext): void {
-  logger.info('Shadcn Help activating...');
+  logger.info('Shadcn Helper activating...');
 
-  const config = vscode.workspace.getConfiguration('shadcnHelp');
+  const config = vscode.workspace.getConfiguration('shadcnHelper');
   const registryUrl = config.get<string>('registry', 'https://ui.shadcn.com');
   const autoDetect = config.get<boolean>('autoDetectProject', true);
 
@@ -33,8 +33,8 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.workspace      .onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
-      if (e.affectsConfiguration('shadcnHelp.registry')) {
-        const newUrl = vscode.workspace.getConfiguration('shadcnHelp').get<string>('registry', 'https://ui.shadcn.com');
+      if (e.affectsConfiguration('shadcnHelper.registry')) {
+        const newUrl = vscode.workspace.getConfiguration('shadcnHelper').get<string>('registry', 'https://ui.shadcn.com');
         registry.setRegistryUrl(newUrl);
         sidebarProvider.refresh();
         logger.info(`Registry URL updated to: ${newUrl}`);
@@ -59,14 +59,14 @@ export function activate(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push({
     dispose: () => {
-      logger.info('Shadcn Help deactivating...');
+      logger.info('Shadcn Helper deactivating...');
       Logger.getInstance().dispose();
     }
   });
 
-  logger.info('Shadcn Help activated');
+  logger.info('Shadcn Helper activated');
 }
 
 export function deactivate(): void {
-  Logger.getInstance().info('Shadcn Help deactivated');
+  Logger.getInstance().info('Shadcn Helper deactivated');
 }

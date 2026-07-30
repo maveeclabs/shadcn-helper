@@ -13,7 +13,7 @@ export default function ProjectBanner({ project, onRefresh, onInit }: ProjectBan
       <div className="project-banner warning">
         <div className="banner-content">
           <span className="banner-icon">&#9888;</span>
-          <span>Open a React project to use Shadcn Help</span>
+          <span>Open a React project to use Shadcn Helper</span>
         </div>
       </div>
     );

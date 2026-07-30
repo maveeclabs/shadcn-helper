@@ -74,7 +74,7 @@ export async function installComponent(
 export function initShadcnInteractive(): void {
   const root = getWorkspaceRoot();
   if (!root) {
-    vscode.window.showErrorMessage('Shadcn Help: No workspace open');
+    vscode.window.showErrorMessage('Shadcn Helper: No workspace open');
     return;
   }
 

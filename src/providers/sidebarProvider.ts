@@ -12,7 +12,7 @@ import { WebviewMessage } from '../types';
 const logger = Logger.getInstance();
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
-  public static readonly viewType = 'shadcnHelp.sidebar';
+  public static readonly viewType = 'shadcnHelper.sidebar';
 
   private _view?: vscode.WebviewView;
   private registry: RegistryService;
@@ -278,7 +278,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'nonce-${nonce}';">
 </head>
 <body>
-  <div id="root"><div class="loading-state"><div class="loading-spinner"></div><p>Loading Shadcn Help...</p></div></div>
+  <div id="root"><div class="loading-state"><div class="loading-spinner"></div><p>Loading Shadcn Helper...</p></div></div>
   <script nonce="${nonce}" src="${scriptUri}"></script>
 </body>
 </html>`;

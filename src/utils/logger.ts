@@ -13,7 +13,7 @@ export class Logger {
   private level: LogLevel = LogLevel.INFO;
 
   private constructor() {
-    this.outputChannel = vscode.window.createOutputChannel('Shadcn Help');
+    this.outputChannel = vscode.window.createOutputChannel('Shadcn Helper');
   }
 
   static getInstance(): Logger {

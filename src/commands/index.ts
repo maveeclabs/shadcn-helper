@@ -13,13 +13,13 @@ export function registerCommands(
   registry: RegistryService
 ): void {
   context.subscriptions.push(
-    vscode.commands.registerCommand('shadcnHelp.open', () => {
-      vscode.commands.executeCommand('workbench.view.extension.shadcnHelpContainer');
+    vscode.commands.registerCommand('shadcnHelper.open', () => {
+      vscode.commands.executeCommand('workbench.view.extension.shadcnHelperContainer');
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('shadcnHelp.installComponent', async () => {
+    vscode.commands.registerCommand('shadcnHelper.installComponent', async () => {
       const components = await registry.fetchComponents();
       const names = components.map(c => c.name);
 
@@ -37,16 +37,16 @@ export function registerCommands(
       const result = await installComponent(component, projectResult.project?.packageManager);
 
       if (result.success) {
-        vscode.window.showInformationMessage(`Shadcn Help: ${selected} installed successfully`);
+        vscode.window.showInformationMessage(`Shadcn Helper: ${selected} installed successfully`);
         sidebarProvider.refresh();
       } else {
-        vscode.window.showErrorMessage(`Shadcn Help: Failed to install ${selected} - ${result.error}`);
+        vscode.window.showErrorMessage(`Shadcn Helper: Failed to install ${selected} - ${result.error}`);
       }
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('shadcnHelp.searchComponents', async () => {
+    vscode.commands.registerCommand('shadcnHelper.searchComponents', async () => {
       const query = await vscode.window.showInputBox({
         placeHolder: 'Search shadcn components...',
         prompt: 'Type a component name or keyword'
@@ -56,7 +56,7 @@ export function registerCommands(
 
       const results = registry.searchComponents(query);
       if (results.length === 0) {
-        vscode.window.showInformationMessage(`Shadcn Help: No components found matching "${query}"`);
+        vscode.window.showInformationMessage(`Shadcn Helper: No components found matching "${query}"`);
         return;
       }
 
@@ -68,15 +68,15 @@ export function registerCommands(
 
       if (!selected) return;
 
-      vscode.commands.executeCommand('workbench.view.extension.shadcnHelpContainer');
+      vscode.commands.executeCommand('workbench.view.extension.shadcnHelperContainer');
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('shadcnHelp.checkProject', () => {
+    vscode.commands.registerCommand('shadcnHelper.checkProject', () => {
       const result = detectProject();
       if (!result.project) {
-        vscode.window.showWarningMessage(`Shadcn Help: ${result.error || 'No project detected'}`);
+        vscode.window.showWarningMessage(`Shadcn Helper: ${result.error || 'No project detected'}`);
         return;
       }
 
@@ -93,27 +93,27 @@ export function registerCommands(
         messages.push(`shadcn version: ${p.shadcnVersion}`);
       }
 
-      vscode.window.showInformationMessage(`Shadcn Help Project Info: ${messages.join(' | ')}`);
+      vscode.window.showInformationMessage(`Shadcn Helper Project Info: ${messages.join(' | ')}`);
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('shadcnHelp.refresh', () => {
+    vscode.commands.registerCommand('shadcnHelper.refresh', () => {
       sidebarProvider.refresh();
-      vscode.window.showInformationMessage('Shadcn Help: Refreshed components');
+      vscode.window.showInformationMessage('Shadcn Helper: Refreshed components');
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('shadcnHelp.initShadcn', async () => {
+    vscode.commands.registerCommand('shadcnHelper.initShadcn', async () => {
       const projectResult = detectProject();
       if (!projectResult.project) {
-        vscode.window.showWarningMessage('Shadcn Help: Open a React project first');
+        vscode.window.showWarningMessage('Shadcn Helper: Open a React project first');
         return;
       }
 
       if (projectResult.project.hasShadcn) {
-        vscode.window.showInformationMessage('Shadcn Help: shadcn/ui is already initialized');
+        vscode.window.showInformationMessage('Shadcn Helper: shadcn/ui is already initialized');
         return;
       }
 
@@ -129,14 +129,14 @@ export function registerCommands(
 
       if (mode.label === 'Interactive Setup') {
         initShadcnInteractive();
-        vscode.window.showInformationMessage('Shadcn Help: Follow the prompts in the terminal');
+        vscode.window.showInformationMessage('Shadcn Helper: Follow the prompts in the terminal');
       } else {
         const result = await initShadcnDefaults();
         if (result.success) {
-          vscode.window.showInformationMessage('Shadcn Help: shadcn/ui initialized successfully');
+          vscode.window.showInformationMessage('Shadcn Helper: shadcn/ui initialized successfully');
           sidebarProvider.refresh();
         } else {
-          vscode.window.showErrorMessage(`Shadcn Help: Init failed - ${result.error || 'Unknown error'}`);
+          vscode.window.showErrorMessage(`Shadcn Helper: Init failed - ${result.error || 'Unknown error'}`);
         }
       }
     })

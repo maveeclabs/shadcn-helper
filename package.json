@@ -1,6 +1,6 @@
 {
-  "name": "shadcn-help",
-  "displayName": "Shadcn Help",
+  "name": "shadcn-helper",
+  "displayName": "Shadcn Helper",
   "description": "Visual assistant for discovering, installing, and managing shadcn/ui components",
   "version": "0.1.0",
   "publisher": "maveeclabs",
@@ -29,58 +29,58 @@
   "contributes": {
     "commands": [
       {
-        "command": "shadcnHelp.open",
+        "command": "shadcnHelper.open",
         "title": "Open",
-        "category": "Shadcn Help"
+        "category": "Shadcn Helper"
       },
       {
-        "command": "shadcnHelp.installComponent",
+        "command": "shadcnHelper.installComponent",
         "title": "Install Component",
-        "category": "Shadcn Help"
+        "category": "Shadcn Helper"
       },
       {
-        "command": "shadcnHelp.searchComponents",
+        "command": "shadcnHelper.searchComponents",
         "title": "Search Components",
-        "category": "Shadcn Help"
+        "category": "Shadcn Helper"
       },
       {
-        "command": "shadcnHelp.checkProject",
+        "command": "shadcnHelper.checkProject",
         "title": "Check Project",
-        "category": "Shadcn Help"
+        "category": "Shadcn Helper"
       },
       {
-        "command": "shadcnHelp.refresh",
+        "command": "shadcnHelper.refresh",
         "title": "Refresh Components",
-        "category": "Shadcn Help"
+        "category": "Shadcn Helper"
       },
       {
-        "command": "shadcnHelp.initShadcn",
+        "command": "shadcnHelper.initShadcn",
         "title": "Initialize shadcn/ui in Current Project",
-        "category": "Shadcn Help"
+        "category": "Shadcn Helper"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "shadcnHelpContainer",
-          "title": "Shadcn Help",
+          "id": "shadcnHelperContainer",
+          "title": "Shadcn Helper",
           "icon": "media/icon.svg"
         }
       ]
     },
     "views": {
-      "shadcnHelpContainer": [
+      "shadcnHelperContainer": [
         {
           "type": "webview",
-          "id": "shadcnHelp.sidebar",
+          "id": "shadcnHelper.sidebar",
           "name": "Components"
         }
       ]
     },
     "configuration": {
-      "title": "Shadcn Help",
+      "title": "Shadcn Helper",
       "properties": {
-        "shadcnHelp.packageManager": {
+        "shadcnHelper.packageManager": {
           "type": "string",
           "default": "auto",
           "enum": [
@@ -92,12 +92,12 @@
           ],
           "description": "Package manager to use for installing components. Auto-detect if not specified."
         },
-        "shadcnHelp.registry": {
+        "shadcnHelper.registry": {
           "type": "string",
           "default": "https://ui.shadcn.com",
           "description": "Registry URL for fetching component data."
         },
-        "shadcnHelp.autoDetectProject": {
+        "shadcnHelper.autoDetectProject": {
           "type": "boolean",
           "default": true,
           "description": "Automatically detect project configuration on startup."
@@ -107,27 +107,27 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "shadcnHelp.open",
+          "command": "shadcnHelper.open",
           "when": "true"
         },
         {
-          "command": "shadcnHelp.installComponent",
-          "when": "shadcnHelp:hasProject"
+          "command": "shadcnHelper.installComponent",
+          "when": "shadcnHelper:hasProject"
         },
         {
-          "command": "shadcnHelp.searchComponents",
-          "when": "shadcnHelp:hasProject"
+          "command": "shadcnHelper.searchComponents",
+          "when": "shadcnHelper:hasProject"
         },
         {
-          "command": "shadcnHelp.checkProject",
+          "command": "shadcnHelper.checkProject",
           "when": "workspaceFolderCount > 0"
         },
         {
-          "command": "shadcnHelp.refresh",
-          "when": "shadcnHelp:hasProject"
+          "command": "shadcnHelper.refresh",
+          "when": "shadcnHelper:hasProject"
         },
         {
-          "command": "shadcnHelp.initShadcn",
+          "command": "shadcnHelper.initShadcn",
           "when": "workspaceFolderCount > 0"
         }
       ]
@@ -155,11 +155,12 @@
     "@vscode/test-electron": "^2.4.1",
     "esbuild": "^0.24.2",
     "npm-run-all": "^4.1.5",
+    "sharp": "^0.35.3",
     "typescript": "^5.7.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/maveeclabs/shadcn-help"
+    "url": "https://github.com/maveeclabs/shadcn-helper"
   },
   "dependencies": {
     "react": "^19.2.8",

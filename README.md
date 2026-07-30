@@ -1,4 +1,4 @@
-# Shadcn Help
+# Shadcn Helper
 
 A VS Code extension for discovering, installing, and managing [shadcn/ui](https://ui.shadcn.com) components directly from your editor.
 
@@ -19,35 +19,35 @@ A VS Code extension for discovering, installing, and managing [shadcn/ui](https:
 
 ## Installation
 
-1. Install from the VS Code Marketplace (search "Shadcn Help")
+1. Install from the VS Code Marketplace (search "Shadcn Helper")
 2. Open a React project in VS Code
-3. Click the Shadcn Help icon in the activity bar (sidebar)
+3. Click the Shadcn Helper icon in the activity bar (sidebar)
 4. Browse and install components
 
 ## Usage
 
 ### Sidebar Panel
-Click the Shadcn Help icon in the activity bar to open the component browser.
+Click the Shadcn Helper icon in the activity bar to open the component browser.
 
 ### Commands
-- `Shadcn Help: Open` — Open the Shadcn Help sidebar
-- `Shadcn Help: Install Component` — Install a component via quick pick
-- `Shadcn Help: Search Components` — Search and jump to components
-- `Shadcn Help: Check Project` — Display project detection results
-- `Shadcn Help: Refresh Components` — Refresh the component list
+- `Shadcn Helper: Open` — Open the Shadcn Helper sidebar
+- `Shadcn Helper: Install Component` — Install a component via quick pick
+- `Shadcn Helper: Search Components` — Search and jump to components
+- `Shadcn Helper: Check Project` — Display project detection results
+- `Shadcn Helper: Refresh Components` — Refresh the component list
 
 ### Settings
-- `shadcnHelp.packageManager` — Choose package manager (auto/npm/pnpm/yarn/bun)
-- `shadcnHelp.registry` — Custom registry URL (default: https://ui.shadcn.com)
-- `shadcnHelp.autoDetectProject` — Auto-detect project on startup (default: true)
+- `shadcnHelper.packageManager` — Choose package manager (auto/npm/pnpm/yarn/bun)
+- `shadcnHelper.registry` — Custom registry URL (default: https://ui.shadcn.com)
+- `shadcnHelper.autoDetectProject` — Auto-detect project on startup (default: true)
 
 ## Extension Settings
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `shadcnHelp.packageManager` | `auto` | Package manager to use |
-| `shadcnHelp.registry` | `https://ui.shadcn.com` | Registry URL |
-| `shadcnHelp.autoDetectProject` | `true` | Auto-detect project settings |
+| `shadcnHelper.packageManager` | `auto` | Package manager to use |
+| `shadcnHelper.registry` | `https://ui.shadcn.com` | Registry URL |
+| `shadcnHelper.autoDetectProject` | `true` | Auto-detect project settings |
 
 ## Known Issues
 

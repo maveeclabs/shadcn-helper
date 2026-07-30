@@ -21908,7 +21908,7 @@
     if (!project) {
       return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "project-banner warning", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "banner-content", children: [
         /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "banner-icon", children: "\u26A0" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Open a React project to use Shadcn Help" })
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: "Open a React project to use Shadcn Helper" })
       ] }) });
     }
     if (!project.isReact) {
