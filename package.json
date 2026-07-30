@@ -1,0 +1,168 @@
+{
+  "name": "shadcn-help",
+  "displayName": "Shadcn Help",
+  "description": "Visual assistant for discovering, installing, and managing shadcn/ui components",
+  "version": "0.1.0",
+  "publisher": "maveeclabs",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "Visualization"
+  ],
+  "keywords": [
+    "shadcn",
+    "shadcn/ui",
+    "react",
+    "next.js",
+    "components",
+    "ui",
+    "tailwind",
+    "radix"
+  ],
+  "icon": "media/icon.png",
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "shadcnHelp.open",
+        "title": "Open",
+        "category": "Shadcn Help"
+      },
+      {
+        "command": "shadcnHelp.installComponent",
+        "title": "Install Component",
+        "category": "Shadcn Help"
+      },
+      {
+        "command": "shadcnHelp.searchComponents",
+        "title": "Search Components",
+        "category": "Shadcn Help"
+      },
+      {
+        "command": "shadcnHelp.checkProject",
+        "title": "Check Project",
+        "category": "Shadcn Help"
+      },
+      {
+        "command": "shadcnHelp.refresh",
+        "title": "Refresh Components",
+        "category": "Shadcn Help"
+      },
+      {
+        "command": "shadcnHelp.initShadcn",
+        "title": "Initialize shadcn/ui in Current Project",
+        "category": "Shadcn Help"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "shadcnHelpContainer",
+          "title": "Shadcn Help",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "shadcnHelpContainer": [
+        {
+          "type": "webview",
+          "id": "shadcnHelp.sidebar",
+          "name": "Components"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Shadcn Help",
+      "properties": {
+        "shadcnHelp.packageManager": {
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "auto",
+            "npm",
+            "pnpm",
+            "yarn",
+            "bun"
+          ],
+          "description": "Package manager to use for installing components. Auto-detect if not specified."
+        },
+        "shadcnHelp.registry": {
+          "type": "string",
+          "default": "https://ui.shadcn.com",
+          "description": "Registry URL for fetching component data."
+        },
+        "shadcnHelp.autoDetectProject": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically detect project configuration on startup."
+        }
+      }
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "shadcnHelp.open",
+          "when": "true"
+        },
+        {
+          "command": "shadcnHelp.installComponent",
+          "when": "shadcnHelp:hasProject"
+        },
+        {
+          "command": "shadcnHelp.searchComponents",
+          "when": "shadcnHelp:hasProject"
+        },
+        {
+          "command": "shadcnHelp.checkProject",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "shadcnHelp.refresh",
+          "when": "shadcnHelp:hasProject"
+        },
+        {
+          "command": "shadcnHelp.initShadcn",
+          "when": "workspaceFolderCount > 0"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "npm run check-types && node esbuild.js",
+    "check-types": "tsc --noEmit",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "vscode:prepublish": "npm run package",
+    "package": "npm run check-types && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "pretest": "npm run compile-tests",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.17.0",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.24.2",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maveeclabs/shadcn-help"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}
