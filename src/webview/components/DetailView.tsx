@@ -5,7 +5,6 @@ interface DetailViewProps {
   component: ShadcnComponent;
   onBack: () => void;
   onInstall: (name: string) => void;
-  onOpenDocs: (url: string) => void;
   installStatus?: InstallFlowStatus;
   uiVariant?: UIVariant;
 }
@@ -14,26 +13,16 @@ export default function DetailView({
   component,
   onBack,
   onInstall,
-  onOpenDocs,
   installStatus,
   uiVariant
 }: DetailViewProps) {
-  const [copied, setCopied] = React.useState(false);
   const isInstalled = component.status === 'installed';
+  const [docsOpen, setDocsOpen] = React.useState(false);
   const isInstalling = installStatus === 'installing';
   const isBaseUI = uiVariant === 'base-ui';
-  const hasMissingDeps = !isBaseUI && component.dependenciesCheck &&
+  const isUnknown = uiVariant === 'unknown';
+  const hasMissingDeps = !isBaseUI && !isUnknown && component.dependenciesCheck &&
     !component.dependenciesCheck.allInstalled;
-
-  const handleCopy = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      console.debug('Clipboard API not available');
-    }
-  };
 
   return (
     <div className="detail-view">
@@ -57,7 +46,19 @@ export default function DetailView({
 
       <p className="detail-description">{component.description}</p>
 
-      {!isBaseUI && component.dependencies.length > 0 && (
+      <div className="detail-actions">
+        {!isInstalled && (
+          <button
+            className="action-btn primary large"
+            onClick={() => onInstall(component.name)}
+            disabled={isInstalling}
+          >
+            {isInstalling ? 'Installing...' : `Install ${component.name}`}
+          </button>
+        )}
+      </div>
+
+      {!isBaseUI && !isUnknown && component.dependencies.length > 0 && (
         <section className="detail-section">
           <h4>Dependencies</h4>
           <ul className="dependency-list">
@@ -81,7 +82,7 @@ export default function DetailView({
         </section>
       )}
 
-      {!isBaseUI && component.dependenciesCheck && !component.dependenciesCheck.allInstalled && (
+      {!isBaseUI && !isUnknown && component.dependenciesCheck && !component.dependenciesCheck.allInstalled && (
         <section className="detail-section warning">
           <h4>Missing Dependencies</h4>
           <p>The following dependencies are required but not installed:</p>
@@ -93,38 +94,23 @@ export default function DetailView({
         </section>
       )}
 
-      {component.examplesCode && (
+      {component.docsUrl && (
         <section className="detail-section">
-          <div className="section-header">
-            <h4>Usage Examples</h4>
-            <button className="copy-btn" onClick={() => handleCopy(component.examplesCode!)}>
-              {copied ? 'Copied!' : 'Copy'}
-            </button>
-          </div>
-          <pre className="example-code"><code>{component.examplesCode}</code></pre>
+          <button className="docs-toggle" onClick={() => setDocsOpen(!docsOpen)}>
+            <h4>Documentation</h4>
+            <span className={`docs-chevron ${docsOpen ? 'open' : ''}`}>▶</span>
+          </button>
+          {docsOpen && (
+            <div className="docs-iframe-container">
+              <iframe
+                src={component.docsUrl}
+                className="docs-iframe"
+                title={`${component.name} documentation`}
+              />
+            </div>
+          )}
         </section>
       )}
-
-      <div className="detail-actions">
-        {!isInstalled && (
-          <button
-            className="action-btn primary large"
-            onClick={() => onInstall(component.name)}
-            disabled={isInstalling}
-          >
-            {isInstalling ? 'Installing...' : `Install ${component.name}`}
-          </button>
-        )}
-
-        {component.docsUrl && (
-          <button
-            className="action-btn secondary large"
-            onClick={() => onOpenDocs(component.docsUrl!)}
-          >
-            Open Documentation
-          </button>
-        )}
-      </div>
     </div>
   );
 }

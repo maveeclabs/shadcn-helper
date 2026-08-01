@@ -175,7 +175,6 @@ export default function App() {
           component={selectedComponent}
           onBack={() => setSelectedComponent(null)}
           onInstall={handleInstall}
-          onOpenDocs={handleOpenDocs}
           installStatus={installStatus.get(selectedComponent.name)}
           uiVariant={project?.uiVariant}
         />

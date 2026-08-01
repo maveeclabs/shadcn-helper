@@ -2,7 +2,7 @@
   "name": "shadcn-helper",
   "displayName": "Shadcn Helper",
   "description": "Visual assistant for discovering, installing, and managing shadcn/ui components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "maveeclabs",
   "license": "MIT",
   "engines": {
@@ -141,6 +141,7 @@
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
     "vscode:prepublish": "npm run package",
     "package": "npm run check-types && node esbuild.js --production",
+    "package:vsix": "npm run package && mkdir -p release && npx @vscode/vsce package -o release/",
     "compile-tests": "tsc -p . --outDir out",
     "pretest": "npm run compile-tests",
     "test": "vscode-test"

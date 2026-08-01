@@ -249,50 +249,11 @@ function fetchJSON<T>(urlStr: string): Promise<T> {
   });
 }
 
-function fetchText(urlStr: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const url = new URL(urlStr);
-    const fetcher = url.protocol === 'https:' ? https : http;
-
-    const req = fetcher.get(url.toString(), { timeout: 10000 }, (res) => {
-      if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-        const redirectUrl = new URL(res.headers.location, url.origin);
-        fetcher.get(redirectUrl.toString(), { timeout: 10000 }, (redirectRes) => {
-          const chunks: Buffer[] = [];
-          redirectRes.on('data', (chunk: Buffer) => chunks.push(chunk));
-          redirectRes.on('end', () => {
-            resolve(Buffer.concat(chunks).toString());
-          });
-        }).on('error', reject);
-        return;
-      }
-
-      if (res.statusCode === 404) {
-        reject(new Error(`Not found: ${urlStr}`));
-        return;
-      }
-
-      const chunks: Buffer[] = [];
-      res.on('data', (chunk: Buffer) => chunks.push(chunk));
-      res.on('end', () => {
-        resolve(Buffer.concat(chunks).toString());
-      });
-    });
-
-    req.on('error', reject);
-    req.on('timeout', () => {
-      req.destroy();
-      reject(new Error('Request timed out'));
-    });
-  });
-}
-
 export class RegistryService {
   private registryUrl: string;
   private components: ShadcnComponent[] = [];
   private fetched = false;
   private detailCache = new Map<string, ShadcnComponent>();
-  private linksCache = new Map<string, NonNullable<V4IndexItem['meta']>>();
 
   constructor(registryUrl: string = 'https://ui.shadcn.com') {
     this.registryUrl = registryUrl;
@@ -303,7 +264,6 @@ export class RegistryService {
       this.registryUrl = url;
       this.fetched = false;
       this.detailCache.clear();
-      this.linksCache.clear();
     }
   }
 
@@ -317,9 +277,6 @@ export class RegistryService {
       this.components = [];
       for (const item of index) {
         const lowerName = item.name.toLowerCase();
-        if (item.meta) {
-          this.linksCache.set(lowerName, item.meta);
-        }
         this.components.push({
           name: item.name.charAt(0).toUpperCase() + item.name.slice(1),
           description: getDescription(item.name, item),
@@ -398,17 +355,6 @@ export class RegistryService {
     }
 
     if (!detail) return base;
-
-    const meta = this.linksCache.get(lowerName);
-    const variantKey = uiVariant === 'base-ui' ? 'base' : uiVariant === 'react-aria' ? 'aria' : uiVariant === 'radix' ? 'radix' : undefined;
-    const exampleUrl = variantKey ? meta?.links?.[variantKey as keyof typeof meta.links]?.examples : undefined;
-    if (exampleUrl) {
-      try {
-        detail.examplesCode = await fetchText(exampleUrl);
-      } catch (err) {
-        logger.debug(`Failed to fetch examples for ${lowerName}: ${err}`);
-      }
-    }
 
     this.detailCache.set(lowerName, detail);
     return detail;
